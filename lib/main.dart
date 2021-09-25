@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Nolimit',
       theme: theme(),
-      initialRoute: SplashScreen.routeName,
+      initialRoute: SignUpScreen.routeName,
       routes: routes,
     );
   }

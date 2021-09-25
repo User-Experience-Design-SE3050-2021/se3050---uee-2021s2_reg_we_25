@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nolimit/components/default_button.dart';
 import 'package:nolimit/components/rounded_icon_btn.dart';
 import 'package:nolimit/constants.dart';
 import 'package:nolimit/models/Product.dart';
+import 'package:nolimit/screens/singleProduct/components/product_images.dart';
 import 'package:nolimit/size_config.dart';
 
 class Body extends StatelessWidget {
@@ -11,65 +13,117 @@ class Body extends StatelessWidget {
   Body({required this.product});
   @override
   Widget build(BuildContext context) {
-    return ProductImages(product: product);
-  }
-}
-
-class ProductImages extends StatelessWidget {
-  const ProductImages({
-    Key? key,
-    required this.product,
-  }) : super(key: key);
-
-  final Product product;
-
-  @override
-  Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          width: getProportionateScreenWidth(250),
-          child: AspectRatio(
-            aspectRatio: 1,
-            child: Image.network(
-              product.images[0],
-              height: 200,
-              width: 300,
-            ),
+        ProductImages(product: product),
+        TopRoundedContainer(
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      product.title,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    Text(
+                      "Rs." + product.price.toString(),
+                      style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: getProportionateScreenWidth(18),
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                  padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+                  child: Text(product.description)),
+              Row(
+                children: [
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: getProportionateScreenWidth(20)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Size",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            SizeContainer(size: 36),
+                            SizeContainer(size: 37),
+                            SizeContainer(size: 38)
+                          ],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.all(getProportionateScreenWidth(20)),
+                child: DefaultButton(
+                  text: "Add To Cart",
+                  press: () => {},
+                ),
+              )
+            ],
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...List.generate(product.images.length,
-                (index) => ProductSmallPreview(image: product.images[index]))
-          ],
         )
       ],
     );
   }
 }
 
-class ProductSmallPreview extends StatelessWidget {
-  const ProductSmallPreview({
+class SizeContainer extends StatelessWidget {
+  const SizeContainer({Key? key, required this.size}) : super(key: key);
+  final int size;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 5, right: 10),
+      padding: EdgeInsets.only(top: 8, bottom: 8, left: 12, right: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(7),
+        border: Border.all(color: kBorderColor),
+      ),
+      child: Text(size.toString()),
+    );
+  }
+}
+
+class TopRoundedContainer extends StatelessWidget {
+  const TopRoundedContainer({
     Key? key,
-    required this.image,
+    required this.color,
+    required this.child,
   }) : super(key: key);
 
-  final String image;
+  final Color color;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(right: getProportionateScreenWidth(10)),
-      padding: EdgeInsets.all(getProportionateScreenWidth(5)),
-      height: getProportionateScreenWidth(60),
-      width: getProportionateScreenWidth(60),
+      padding: EdgeInsets.only(top: getProportionateScreenWidth(20)),
+      width: double.infinity,
+      height: 390,
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: kPrimaryColor)),
-      child: Image.network(image),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(15), topRight: Radius.circular(15))),
+      child: child,
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nolimit/components/default_button.dart';
 import 'package:nolimit/components/rounded_icon_btn.dart';
+import 'package:nolimit/components/secondary_button.dart';
 import 'package:nolimit/constants.dart';
 import 'package:nolimit/models/Product.dart';
 import 'package:nolimit/screens/singleProduct/components/product_images.dart';
@@ -72,7 +72,7 @@ class Body extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-                child: DefaultButton(
+                child: SecondaryButton(
                   text: "Add To Cart",
                   press: () => {},
                 ),

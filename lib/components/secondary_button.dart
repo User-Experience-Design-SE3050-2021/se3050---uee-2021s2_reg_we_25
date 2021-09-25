@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../size_config.dart';
 
-class DefaultButton extends StatelessWidget {
-  const DefaultButton({
+class SecondaryButton extends StatelessWidget {
+  const SecondaryButton({
     Key? key,
     this.text,
     this.press,

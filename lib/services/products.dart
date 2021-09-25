@@ -1,0 +1,21 @@
+import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:nolimit/models/Product.dart';
+
+class ProductsService {
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  String collection = 'products';
+
+  Future<List<Product>> getAllProducts() =>
+      _firestore.collection(collection).get().then((QuerySnapshot snap) {
+        List<Product> allProducts = [];
+        snap.docs.forEach((snapshot) {
+          if (snapshot.exists) {
+            allProducts.add(Product.fromSnapshot(snapshot));
+          } else {
+            print("Snapshots doesn't exist");
+          }
+        });
+        return allProducts;
+      });
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nolimit/enums.dart';
+import 'package:nolimit/screens/allProducts/all_products_screen.dart';
 import 'package:nolimit/screens/home/home_screen.dart';
 
 import '../constants.dart';
@@ -50,7 +51,8 @@ class BottomNavBar extends StatelessWidget {
                       ? kPrimaryColor
                       : inActiveIconColor,
                 ),
-                onPressed: () {},
+                onPressed: () =>
+                    Navigator.pushNamed(context, AllProductsScreen.routeName),
               ),
               IconButton(
                 icon: SvgPicture.asset(

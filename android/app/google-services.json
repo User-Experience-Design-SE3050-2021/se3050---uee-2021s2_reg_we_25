@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "709884755825",
+    "project_id": "nolimit-df9b9",
+    "storage_bucket": "nolimit-df9b9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709884755825:android:3b914fd20d932f79b540d0",
+        "android_client_info": {
+          "package_name": "com.example.nolimit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709884755825-qh2i86a255it06kb37v3eascm7d14tq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6aMJfEmOXNHGdBQILG7Obw3R1Ad6FZs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709884755825-qh2i86a255it06kb37v3eascm7d14tq9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

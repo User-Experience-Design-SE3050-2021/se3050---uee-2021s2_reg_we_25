@@ -10,11 +10,11 @@ class Body extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 32),
+              SizedBox(height: SizeConfig.screenHeight * 0.04),
               Text(
                 'Register Account',
                 style: headingStyle,
@@ -23,9 +23,9 @@ class Body extends StatelessWidget {
                 'Fill in your details or continue with a social media account',
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 64),
+              SizedBox(height: SizeConfig.screenHeight * 0.06),
               SignUpForm(),
-              SizedBox(height: 48),
+              SizedBox(height: SizeConfig.screenHeight * 0.06),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -43,7 +43,7 @@ class Body extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: getProportionateScreenHeight(20)),
               Text(
                 "By continuing you confirm that you agree \nwith our Terms and Conditions",
                 textAlign: TextAlign.center,

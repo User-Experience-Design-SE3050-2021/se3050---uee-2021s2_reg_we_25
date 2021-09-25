@@ -5,6 +5,7 @@ import 'package:nolimit/components/custom_suffix_icon.dart';
 import 'package:nolimit/components/default_button.dart';
 import 'package:nolimit/components/form_error.dart';
 import 'package:nolimit/screens/complete_profile/complete_profile_screen.dart';
+import 'package:nolimit/size_config.dart';
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -41,14 +42,14 @@ class _SignUpFormState extends State<SignUpForm> {
           buildEmailFormField(),
           FormError(error: errors.contains(kEmailNullError) ? kEmailNullError : ''),
           FormError(error: errors.contains(kInvalidEmailError) ? kInvalidEmailError : ''),
-          SizedBox(height: 32),
+          SizedBox(height: getProportionateScreenHeight(32)),
           buildPasswordFormField(),
           FormError(error: errors.contains(kPassNullError) ? kPassNullError : ''),
           FormError(error: errors.contains(kShortPassError) ? kShortPassError : ''),
-          SizedBox(height: 32),
+          SizedBox(height: getProportionateScreenHeight(32)),
           buildConfirmPasswordFormField(),
           FormError(error: errors.contains(kMatchPassError) ? kMatchPassError : ''),
-          SizedBox(height: 40),
+          SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Continue",
             press: () {

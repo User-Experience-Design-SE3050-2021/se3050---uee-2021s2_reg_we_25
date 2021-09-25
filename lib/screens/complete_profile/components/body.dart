@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nolimit/constants.dart';
+import 'package:nolimit/size_config.dart';
 
 import 'complete_profile_form.dart';
 
@@ -9,11 +10,11 @@ class Body extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 12),
+              SizedBox(height: SizeConfig.screenHeight * 0.03),
               Text(
                 'Complete Profile',
                 style: headingStyle,
@@ -22,9 +23,9 @@ class Body extends StatelessWidget {
                 'Complete your details or continue\nwith social media',
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 32),
+              SizedBox(height: SizeConfig.screenHeight * 0.06),
               CompleteProfileForm(),
-              SizedBox(height: 32),
+              SizedBox(height: getProportionateScreenHeight(32)),
               Text(
                 'By continuing you confirm that you agree\nwith our Terms and Conditions',
                 textAlign: TextAlign.center,

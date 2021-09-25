@@ -4,6 +4,7 @@ import 'package:nolimit/screens/complete_profile/complete_profile_screen.dart';
 import 'package:nolimit/screens/home/home_screen.dart';
 import 'package:nolimit/screens/singleProduct/singleProduct_screen.dart';
 import 'package:nolimit/screens/sign_up/sign_up_screen.dart';
+import 'package:nolimit/screens/sign_up_success/sign_up_success_screen.dart';
 import 'package:nolimit/screens/splash/splash_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
@@ -13,4 +14,5 @@ final Map<String, WidgetBuilder> routes = {
   SingleProductScreen.routeName: (context) => SingleProductScreen(),
   SignUpScreen.routeName: (context) => SignUpScreen(),
   CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
+  SignUpSuccessScreen.routeName: (context) => SignUpSuccessScreen(),
 };

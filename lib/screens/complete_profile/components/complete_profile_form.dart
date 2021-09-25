@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:nolimit/components/custom_suffix_icon.dart';
 import 'package:nolimit/components/default_button.dart';
 import 'package:nolimit/components/form_error.dart';
+import 'package:nolimit/screens/sign_up_success/sign_up_success_screen.dart';
 
 import '../../../constants.dart';
+import '../../../size_config.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -40,21 +42,21 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         children: [
           buildFirstNameFormField(),
           FormError(error: errors.contains(kNameNullError) ? kNameNullError : ''),
-          SizedBox(height: 32),
+          SizedBox(height: getProportionateScreenHeight(32)),
           buildLastNameFormField(),
           FormError(error: errors.contains(kNameNullError) ? kNameNullError : ''),
-          SizedBox(height: 32),
+          SizedBox(height: getProportionateScreenHeight(32)),
           buildPhoneNumberFormField(),
           FormError(error: errors.contains(kPhoneNumberNullError) ? kPhoneNumberNullError : ''),
-          SizedBox(height: 32),
+          SizedBox(height: getProportionateScreenHeight(32)),
           buildAddressFormField(),
           FormError(error: errors.contains(kAddressNullError) ? kAddressNullError : ''),
-          SizedBox(height: 40),
+          SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: 'Continue',
             press: () {
               if (_formKey.currentState!.validate()) {
-                // Go to Registration Success Screen
+                Navigator.pushNamed(context, SignUpSuccessScreen.routeName);
               }
             },
           )

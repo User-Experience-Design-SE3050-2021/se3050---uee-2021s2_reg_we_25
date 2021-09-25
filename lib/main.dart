@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nolimit/constants.dart';
 import 'package:nolimit/provider/app_provider.dart';
 import 'package:nolimit/routes.dart';
 import 'package:nolimit/screens/splash/splash_screen.dart';

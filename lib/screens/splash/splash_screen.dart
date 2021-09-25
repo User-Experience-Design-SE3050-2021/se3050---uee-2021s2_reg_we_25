@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nolimit/screens/allProducts/all_products_screen.dart';
-import 'package:nolimit/screens/home/home_screen.dart';
+import 'package:nolimit/screens/sign_up/sign_up_screen.dart';
 import 'dart:async';
 import '../../size_config.dart';
 import 'components/body.dart';
@@ -12,8 +11,12 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     Future.delayed(Duration(seconds: 3), () {
-      // 5 seconds over, navigate to Page2.
-      Navigator.pushNamed(context, AllProductsScreen.routeName);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SignUpScreen()
+        )
+      );
     });
     return Scaffold(
       body: Body(),

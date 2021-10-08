@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nolimit/screens/home/home_screen.dart';
 import 'package:nolimit/screens/sign_up/sign_up_screen.dart';
 import 'dart:async';
 import '../../size_config.dart';
@@ -12,11 +13,7 @@ class SplashScreen extends StatelessWidget {
     SizeConfig().init(context);
     Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => SignUpScreen()
-        )
-      );
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
     });
     return Scaffold(
       body: Body(),

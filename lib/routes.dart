@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:nolimit/screens/allProducts/all_products_screen.dart';
+import 'package:nolimit/screens/cart/cart_screen.dart';
+import 'package:nolimit/screens/checkout/checkout_screen.dart';
 import 'package:nolimit/screens/complete_profile/complete_profile_screen.dart';
+import 'package:nolimit/screens/delivery/delivery_screen.dart';
 import 'package:nolimit/screens/home/home_screen.dart';
 import 'package:nolimit/screens/singleProduct/singleProduct_screen.dart';
 import 'package:nolimit/screens/sign_up/sign_up_screen.dart';
@@ -15,4 +18,7 @@ final Map<String, WidgetBuilder> routes = {
   SignUpScreen.routeName: (context) => SignUpScreen(),
   CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
   SignUpSuccessScreen.routeName: (context) => SignUpSuccessScreen(),
+  CartScreen.routeName: (context) => CartScreen(),
+  CheckoutScreen.routeName: (context) => CheckoutScreen(),
+  DeliveryScreen.routeName: (context) => DeliveryScreen()
 };

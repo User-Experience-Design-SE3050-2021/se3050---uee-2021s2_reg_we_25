@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nolimit/screens/my_account/my_account_screen.dart';
 import 'package:nolimit/screens/profile/components/profile_pic.dart';
 import 'profile_menu.dart';
 
@@ -12,7 +13,9 @@ class Body extends StatelessWidget {
         ProfileMenu(
           icon: 'assets/icons/User Icon.svg',
           text: 'My Account',
-          press: () {}
+          press: () {
+            Navigator.pushNamed(context, MyAccountScreen.routeName);
+          }
         ),
         ProfileMenu(
           icon: 'assets/icons/Bell.svg',

@@ -80,6 +80,14 @@ class Body extends StatelessWidget {
                   ProductGroup(
                     arr: appProvider.newArrivals,
                     title: "New Arrivals",
+                  ),
+                  ProductGroup(
+                    arr: appProvider.bestSellers,
+                    title: "Best Sellers",
+                  ),
+                  ProductGroup(
+                    arr: appProvider.trendingProducts,
+                    title: "Trending Products",
                   )
                 ],
               ),

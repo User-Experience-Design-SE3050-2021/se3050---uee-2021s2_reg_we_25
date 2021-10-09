@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nolimit/components/product_card.dart';
+import 'package:nolimit/models/Brand.dart';
+import 'package:nolimit/models/Category.dart';
 import 'package:nolimit/models/Product.dart';
+import 'package:nolimit/provider/BrandProvider.dart';
+import 'package:nolimit/provider/Category_provider.dart';
 import 'package:nolimit/provider/app_provider.dart';
+import 'package:nolimit/screens/allBrands/allBrands_screen.dart';
+import 'package:nolimit/screens/allCategory/all_category_screen.dart';
+import 'package:nolimit/screens/allProducts/all_products_screen.dart';
 import 'package:nolimit/screens/singleProduct/singleProduct_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +20,8 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appProvider = Provider.of<AppProvider>(context);
+    var categoryProvider = Provider.of<CategoryProvider>(context);
+    var brandProvider = Provider.of<BrandProvider>(context);
     final double itemHeight = getProportionateScreenHeight(202);
     final double itemWidth = getProportionateScreenWidth(100);
     return SingleChildScrollView(
@@ -33,62 +42,28 @@ class Body extends StatelessWidget {
             SizedBox(
               height: 5,
             ),
-            // TopCollections(),
-            // SizedBox(
-            //   height: 5,
-            // ),
             Padding(
               padding: EdgeInsets.all(10),
               child: Column(
                 children: [
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Text(
-                  //       "Brands",
-                  //       style: TextStyle(
-                  //           fontWeight: FontWeight.w600,
-                  //           color: Colors.black,
-                  //           fontSize: 18),
-                  //     ),
-                  //     Text(
-                  //       "See More",
-                  //       style:
-                  //           TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-                  //     ),
-                  //   ],
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     GestureDetector(
-                  //       child: SizedBox(
-                  //         width: getProportionateScreenWidth(100),
-                  //         child: Container(
-                  //           padding: EdgeInsets.fromLTRB(
-                  //               getProportionateScreenWidth(5),
-                  //               getProportionateScreenWidth(2),
-                  //               getProportionateScreenWidth(2),
-                  //               0),
-                  //           child: Image.asset(
-                  //             "assets/images/deedat.png",
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
                   ProductGroup(
-                    arr: appProvider.newArrivals,
-                    title: "New Arrivals",
+                      arr: appProvider.newArrivals,
+                      title: "New Arrivals",
+                      route: AllProductsScreen.routeName),
+                  ProductGroup(
+                      arr: appProvider.bestSellers,
+                      title: "Best Sellers",
+                      route: AllProductsScreen.routeName),
+                  TopCollections(
+                    allCollections: categoryProvider.allCategory,
                   ),
                   ProductGroup(
-                    arr: appProvider.bestSellers,
-                    title: "Best Sellers",
+                      arr: appProvider.trendingProducts,
+                      title: "Trending Products",
+                      route: AllProductsScreen.routeName),
+                  AllBrands(
+                    allBrands: brandProvider.allBrand,
                   ),
-                  ProductGroup(
-                    arr: appProvider.trendingProducts,
-                    title: "Trending Products",
-                  )
                 ],
               ),
             )
@@ -99,54 +74,127 @@ class Body extends StatelessWidget {
   }
 }
 
-class TopCollections extends StatelessWidget {
-  const TopCollections({
-    Key? key,
-  }) : super(key: key);
-
+class AllBrands extends StatelessWidget {
+  const AllBrands({Key? key, required this.allBrands}) : super(key: key);
+  final List<Brand> allBrands;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Top Collections",
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                    fontSize: 18),
-              ),
-              Text(
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Brands",
+              style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                  fontSize: 18),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, AllBrandsScreen.routeName);
+              },
+              child: Text(
                 "See More",
                 style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
               ),
+            ),
+          ],
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              ...List.generate(allBrands.length,
+                  (index) => SingleBrand(image: allBrands[index].image))
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: Row(
+        )
+      ],
+    );
+  }
+}
+
+class SingleBrand extends StatelessWidget {
+  const SingleBrand({Key? key, required this.image}) : super(key: key);
+  final String image;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        GestureDetector(
+          child: SizedBox(
+            width: getProportionateScreenWidth(100),
+            child: Container(
+              padding: EdgeInsets.fromLTRB(
+                  getProportionateScreenWidth(5),
+                  getProportionateScreenWidth(2),
+                  getProportionateScreenWidth(2),
+                  0),
+              child: Image.network(
+                image,
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class TopCollections extends StatelessWidget {
+  const TopCollections({Key? key, required this.allCollections})
+      : super(key: key);
+
+  final List<Category> allCollections;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SingleCollection(
-                  name: "Women",
-                  image: "",
+                Text(
+                  "Top Collections",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: 18),
                 ),
-                SingleCollection(
-                  name: "Men",
-                  image: "",
-                ),
-                SingleCollection(
-                  name: "Kids",
-                  image: "",
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, AllCategoryScreen.routeName);
+                  },
+                  child: Text(
+                    "See More",
+                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                  ),
                 ),
               ],
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: Wrap(
+                spacing: 15,
+                runSpacing: 10,
+                children: [
+                  ...List.generate(
+                      allCollections.length,
+                      (index) => SingleCollection(
+                            name: allCollections[index].title,
+                            image: allCollections[index].image,
+                          )),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -171,15 +219,15 @@ class SingleCollection extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.fromLTRB(
                     getProportionateScreenWidth(5),
-                    getProportionateScreenWidth(2),
+                    getProportionateScreenWidth(5),
                     getProportionateScreenWidth(2),
                     0),
                 decoration: BoxDecoration(
                     color: kProductBgColor.withOpacity(0.8),
                     borderRadius: BorderRadius.circular(15)),
-                // child: Image.network(
-                //   product.images[0],
-                // ),
+                child: Image.network(
+                  image,
+                ),
               ),
             ),
             SizedBox(
@@ -200,10 +248,12 @@ class SingleCollection extends StatelessWidget {
 }
 
 class ProductGroup extends StatelessWidget {
-  const ProductGroup({Key? key, required this.arr, required this.title})
+  const ProductGroup(
+      {Key? key, required this.arr, required this.title, required this.route})
       : super(key: key);
   final List<Product> arr;
   final String title;
+  final String route;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -218,14 +268,19 @@ class ProductGroup extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 18),
             ),
-            Text(
-              "See More",
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, route);
+              },
+              child: Text(
+                "See More",
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+              ),
             ),
           ],
         ),
         Wrap(
-          spacing: 40,
+          spacing: 30,
           runSpacing: -15,
           children: [
             ...List.generate(
@@ -264,6 +319,7 @@ class HotIconsRow extends StatelessWidget {
             color1: 0xFF1488CC,
             color2: 0xFF2B32B2,
             padding: 12,
+            route: "",
           ),
           HotIcon(
             name: "Categories",
@@ -271,20 +327,22 @@ class HotIconsRow extends StatelessWidget {
             color1: 0xFF02AAB0,
             color2: 0xFF00CDAC,
             padding: 14,
+            route: AllCategoryScreen.routeName,
           ),
           HotIcon(
-            name: "Brands",
-            icon: "assets/icons/brands.svg",
-            color1: 0xFF11ADD4,
-            color2: 0xFF92EAFF,
-            padding: 10,
-          ),
+              name: "Brands",
+              icon: "assets/icons/brands.svg",
+              color1: 0xFF11ADD4,
+              color2: 0xFF92EAFF,
+              padding: 10,
+              route: AllBrandsScreen.routeName),
           HotIcon(
             name: "Vouchers",
             icon: "assets/icons/vouchers.svg",
             color1: 0xFF46B3DB,
             color2: 0xFF22BCAF,
             padding: 10,
+            route: "",
           ),
           HotIcon(
             name: "Clothes",
@@ -292,6 +350,7 @@ class HotIconsRow extends StatelessWidget {
             color1: 0xFF4CB7FC,
             color2: 0xFF1046D1,
             padding: 12,
+            route: AllProductsScreen.routeName,
           )
         ],
       ),
@@ -306,30 +365,37 @@ class HotIcon extends StatelessWidget {
       required this.icon,
       required this.color1,
       required this.color2,
-      required this.padding})
+      required this.padding,
+      required this.route})
       : super(key: key);
   final String name;
   final String icon;
   final int color1;
   final int color2;
   final double padding;
+  final String route;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          padding: EdgeInsets.all(padding),
-          height: 50,
-          width: 50,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(color1), Color(color2)],
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, route);
+          },
+          child: Container(
+            padding: EdgeInsets.all(padding),
+            height: 50,
+            width: 50,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Color(color1), Color(color2)],
+              ),
             ),
+            child: SvgPicture.asset(icon),
           ),
-          child: SvgPicture.asset(icon),
         ),
         SizedBox(
           height: 2,

@@ -4,6 +4,8 @@ import 'package:nolimit/constants.dart';
 import 'package:nolimit/components/custom_suffix_icon.dart';
 import 'package:nolimit/components/default_button.dart';
 import 'package:nolimit/components/form_error.dart';
+import 'package:nolimit/screens/home/home_screen.dart';
+import 'package:nolimit/screens/profile/profile_screen.dart';
 import 'package:nolimit/size_config.dart';
 
 class SignInForm extends StatefulWidget {
@@ -53,9 +55,22 @@ class _SignInFormState extends State<SignInForm> {
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                // Navigator.pushNamed(context, HomeScreen.routeName);
+                Navigator.pushNamed(context, ProfileScreen.routeName);
               }
             }
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(context, ProfileScreen.routeName),
+              child: Text(
+                'Skip',
+                style: TextStyle(
+                  color: kPrimaryColor,
+                  fontSize: 18
+                ),
+              ),
+            ),
           )
         ],
       )
@@ -114,9 +129,6 @@ class _SignInFormState extends State<SignInForm> {
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: kPassNullError);
-          return "";
-        } else if (value.length < 8) {
-          addError(error: kShortPassError);
           return "";
         }
         return null;

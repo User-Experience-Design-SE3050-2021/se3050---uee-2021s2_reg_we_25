@@ -26,7 +26,7 @@ class Body extends StatelessWidget {
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.08),
               SignInForm(),
-              SizedBox(height: SizeConfig.screenHeight * 0.08),
+              SizedBox(height: SizeConfig.screenHeight * 0.04),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

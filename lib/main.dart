@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nolimit/constants.dart';
+import 'package:nolimit/provider/BrandProvider.dart';
 import 'package:nolimit/provider/Category_provider.dart';
 import 'package:nolimit/provider/app_provider.dart';
 import 'package:nolimit/routes.dart';
@@ -12,7 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MultiProvider(
-      providers: [ChangeNotifierProvider.value(value: AppProvider()),ChangeNotifierProvider.value(value: CategoryProvider())],
+      providers: [ChangeNotifierProvider.value(value: AppProvider()),ChangeNotifierProvider.value(value: CategoryProvider()),ChangeNotifierProvider.value(value: BrandProvider())],
       child: MyApp()));
 }
 

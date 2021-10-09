@@ -6,18 +6,17 @@ class Brand {
   static const IMAGE = "image";
 
   late String _title;
-  late List _image;
+  late String _image;
 
 //   getters
 
   String get title => _title;
 
-  List get image => _image;
+  String get image => _image;
 
   Brand.fromSnapshot(DocumentSnapshot snapshot) {
     Map data = snapshot.data() as Map;
     _title = data[TITLE];
     _image = data[IMAGE];
-
   }
 }

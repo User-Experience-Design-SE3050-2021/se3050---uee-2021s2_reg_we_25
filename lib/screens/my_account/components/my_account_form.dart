@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:localstore/localstore.dart';
@@ -5,40 +7,51 @@ import 'package:localstore/localstore.dart';
 import 'package:nolimit/components/custom_suffix_icon.dart';
 import 'package:nolimit/components/default_button.dart';
 import 'package:nolimit/components/form_error.dart';
-import 'package:nolimit/screens/sign_up_success/sign_up_success_screen.dart';
+import 'package:nolimit/screens/profile/profile_screen.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-class CompleteProfileForm extends StatefulWidget {
-  CompleteProfileForm({
-    Key? key,
-    required this.email,
-    required this.password
-  }) : super(key: key);
-  
-  final String email, password;
-
+class MyAccountForm extends StatefulWidget {
   @override
-  _CompleteProfileFormState createState() => _CompleteProfileFormState(email: email, password: password);
+  _MyAccountFormState createState() => _MyAccountFormState();
 }
 
-class _CompleteProfileFormState extends State<CompleteProfileForm> {
-  _CompleteProfileFormState({
-    required this.email,
-    required this.password
-  });
-
-  final String email, password;
+class _MyAccountFormState extends State<MyAccountForm> {
+  _MyAccountFormState() {
+    setDetails();
+  }
 
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+  final db = Localstore.instance;
   final _formKey = GlobalKey<FormState>();
   final List<String> errors = [];
-  String firstName = '';
-  String lastName = '';
-  String phoneNumber = '';
-  String address = '';
+  
+  Map<String, dynamic> user = {
+    'id': '',
+    'email': '',
+    'password': '',
+    'firstName': '',
+    'lastName': '',
+    'phoneNumber': '',
+    'address': '',
+    'avatar': '',
+  };
+
+  TextEditingController _firstNameController = new TextEditingController();
+  TextEditingController _lastNameController = new TextEditingController();
+  TextEditingController _phoneNumberController = new TextEditingController();
+  TextEditingController _addressController = new TextEditingController();
+
+  void setDetails() {
+    db.collection('login').doc('loginData').get().then((value) {
+      this.user = value!;
+      _firstNameController.text = this.user['firstName'];
+      _lastNameController.text = this.user['lastName'];
+      _phoneNumberController.text = this.user['phoneNumber'];
+      _addressController.text = this.user['address'];
+    });
+  }
 
   void addError({ String? error }) {
     if (!errors.contains(error))
@@ -73,24 +86,14 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           FormError(error: errors.contains(kAddressNullError) ? kAddressNullError : ''),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: 'Sign Up',
+            text: 'Save Changes',
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState?.save();
-                
-                Map<String, dynamic> user = {
-                  'email': email,
-                  'password': password,
-                  'firstName': firstName,
-                  'lastName': lastName,
-                  'phoneNumber': phoneNumber,
-                  'address': address
-                };
-
-                _firestore.collection('users').add(user).then((value) {
-                  user['id'] = value.id;
-                  Localstore.instance.collection('login').doc('loginData').set(user);
-                  Navigator.pushNamed(context, SignUpSuccessScreen.routeName);
+                _firestore.collection('users').doc(user['id']).update(user).then((value) {
+                  db.collection('login').doc('loginData').set(user).then((value) => 
+                    Navigator.pushNamed(context, ProfileScreen.routeName)
+                  );
                 });
               }
             },
@@ -103,7 +106,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildAddressFormField() {
     return TextFormField(
           keyboardType: TextInputType.streetAddress,
-          onSaved: (newValue) => address = newValue ?? '',
+          controller: _addressController,
+          onSaved: (newValue) => user['address'] = newValue ?? '',
           onChanged: (value) {
             if (value.isNotEmpty) {
               removeError(error: kAddressNullError);
@@ -129,7 +133,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildPhoneNumberFormField() {
     return TextFormField(
           keyboardType: TextInputType.phone,
-          onSaved: (newValue) => phoneNumber = newValue ?? '',
+          controller: _phoneNumberController,
+          onSaved: (newValue) => user['phoneNumber'] = newValue ?? '',
           onChanged: (value) {
             if (value.isNotEmpty) {
               removeError(error: kPhoneNumberNullError);
@@ -155,7 +160,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildLastNameFormField() {
     return TextFormField(
           keyboardType: TextInputType.name,
-          onSaved: (newValue) => lastName = newValue ?? '',
+          controller: _lastNameController,
+          onSaved: (newValue) => user['lastName'] = newValue ?? '',
           onChanged: (value) {
             if (value.isNotEmpty) {
               removeError(error: kNameNullError);
@@ -181,7 +187,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildFirstNameFormField() {
     return TextFormField(
           keyboardType: TextInputType.name,
-          onSaved: (newValue) => firstName = newValue ?? '',
+          controller: _firstNameController,
+          onSaved: (newValue) => user['firstName'] = newValue ?? '',
           onChanged: (value) {
             if (value.isNotEmpty) {
               removeError(error: kNameNullError);

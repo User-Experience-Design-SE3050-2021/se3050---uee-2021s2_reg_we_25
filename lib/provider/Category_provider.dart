@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nolimit/models/Category.dart';
 import 'package:nolimit/services/Category.dart';
 
-
 class CategoryProvider with ChangeNotifier {
   List<Category> _allCategory = [];
   CategoryService _categoryService = CategoryService();
@@ -17,6 +16,7 @@ class CategoryProvider with ChangeNotifier {
 //  methods
   void _getAllCategory() async {
     _allCategory = await _categoryService.getAllCategory();
+    print(allCategory);
     notifyListeners();
   }
 }

@@ -4,24 +4,21 @@ import 'package:flutter/foundation.dart';
 class Category {
   static const TITLE = "title";
   static const IMAGE = "image";
-  static const DESCRIPTION = "description";
+  static const COLOR = "color";
 
   late String _title;
-  late List _image;
-  late String _description;
-
+  late String _image;
+  late String _color;
 //   getters
 
   String get title => _title;
-  String get description => _description;
-  List get image => _image;
-
+  String get image => _image;
+  String get color => _color;
 
   Category.fromSnapshot(DocumentSnapshot snapshot) {
     Map data = snapshot.data() as Map;
     _title = data[TITLE];
-    _description = data[DESCRIPTION];
     _image = data[IMAGE];
-
+    _color = data[COLOR];
   }
 }

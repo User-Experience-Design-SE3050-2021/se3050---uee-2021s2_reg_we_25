@@ -14,7 +14,6 @@ const kTextColor = Color(0xFF757575);
 const kBorderColor = Color(0xFFE8E8E8);
 const kGreyBorder = Color(0xFFE5E5E5);
 const kProductBgColor = Color(0xFFEEEFF1);
-
 const kAnimationDuration = Duration(milliseconds: 200);
 
 final headingStyle = TextStyle(

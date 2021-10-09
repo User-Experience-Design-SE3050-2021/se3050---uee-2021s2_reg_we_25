@@ -9,6 +9,7 @@ import 'package:nolimit/provider/Category_provider.dart';
 import 'package:nolimit/provider/app_provider.dart';
 import 'package:nolimit/screens/allBrands/allBrands_screen.dart';
 import 'package:nolimit/screens/allCategory/all_category_screen.dart';
+import 'package:nolimit/screens/allOffers/all_offers_screen.dart';
 import 'package:nolimit/screens/allProducts/all_products_screen.dart';
 import 'package:nolimit/screens/singleProduct/singleProduct_screen.dart';
 import 'package:provider/provider.dart';
@@ -319,7 +320,7 @@ class HotIconsRow extends StatelessWidget {
             color1: 0xFF1488CC,
             color2: 0xFF2B32B2,
             padding: 12,
-            route: "",
+            route: AllOffersScreen.routeName,
           ),
           HotIcon(
             name: "Categories",

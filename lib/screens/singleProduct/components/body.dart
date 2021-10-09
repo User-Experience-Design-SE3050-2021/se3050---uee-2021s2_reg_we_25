@@ -305,10 +305,6 @@ class _ColorContainerListState extends State<ColorContainerList> {
   }
 
   GestureDetector buildSingleColor(var color) {
-    print("In build Single Color");
-    print(color);
-    print(color["code"]);
-
     return GestureDetector(
       onTap: () {
         setState(() {

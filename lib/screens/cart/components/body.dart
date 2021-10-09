@@ -4,6 +4,8 @@ import 'package:flutter/rendering.dart';
 import 'package:nolimit/components/secondary_button.dart';
 import 'package:nolimit/constants.dart';
 import 'package:nolimit/models/Cart.dart';
+import 'package:nolimit/models/Order.dart';
+import 'package:nolimit/screens/orderSummary/orderSummary_screen.dart';
 import 'package:nolimit/size_config.dart';
 
 class Body extends StatefulWidget {
@@ -102,7 +104,42 @@ class _BodyState extends State<Body> {
                     ),
                     SecondaryButton(
                       text: "Checkout",
-                      press: () => {},
+                      press: () {
+                        if (selectedItems.length > 0) {
+                          Order order = Order.getOrder();
+
+                          List<OrderProduct> productList = [];
+                          selectedItems.forEach((item) {
+                            OrderProduct items = new OrderProduct(
+                                productId: item.product.id,
+                                size: item.selectedSize,
+                                color: item.selectedColor,
+                                productName: item.product.title,
+                                qty: item.numOfItems,
+                                colorCode: item.colorCode,
+                                price: (item.product.price * item.numOfItems)
+                                    .toDouble(),
+                                image: item.product.images[0]);
+
+                            productList.add(items);
+                          });
+                          order.total = selectedTotal;
+                          order.products = productList;
+                          Order.setOrder(order);
+
+                          Navigator.pushNamed(
+                              context, OrderSummaryScreen.routeName);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: Colors.white,
+                              content: Text(
+                                "Please select Products before proceeding to checkout",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: kPrimaryColor, fontSize: 16),
+                              )));
+                        }
+                      },
                     )
                   ],
                 ),
@@ -208,14 +245,14 @@ class _CardItemCardState extends State<CardItemCard> {
                       height: getProportionateScreenWidth(15),
                       width: getProportionateScreenWidth(15),
                       decoration: BoxDecoration(
-                          color: kPrimaryColor,
+                          color: Color(widget.cart.colorCode),
                           borderRadius: BorderRadius.circular(15)),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Text(
-                      "Size : M",
+                      "Size : ${widget.cart.selectedSize}",
                       style: TextStyle(fontSize: 14),
                       textAlign: TextAlign.left,
                     ),

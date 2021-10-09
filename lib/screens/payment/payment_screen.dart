@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:nolimit/components/bottom_nav_bar.dart';
-import 'package:nolimit/screens/checkout/components/body.dart';
+import 'package:nolimit/screens/payment/components/body.dart';
 
 import '../../enums.dart';
 
-class CheckoutScreen extends StatelessWidget {
-  static String routeName = "/shipping";
+class PaymentScreen extends StatelessWidget {
+  static String routeName = "/payment";
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: buildAppBar(context), body: Body());
+    return Scaffold(
+      appBar: buildAppBar(context),
+      body: Body(),
+    );
   }
 
   AppBar buildAppBar(BuildContext context) {

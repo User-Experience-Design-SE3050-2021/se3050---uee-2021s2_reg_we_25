@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nolimit/components/custom_suffix_icon.dart';
 import 'package:nolimit/components/form_error.dart';
 import 'package:nolimit/components/secondary_button.dart';
+import 'package:nolimit/models/Order.dart';
+import 'package:nolimit/screens/delivery/delivery_screen.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -79,11 +81,19 @@ class _ShippingFormState extends State<ShippingForm> {
               controller: address,
               type: "text"),
           SecondaryButton(
-            text: "Checkout",
+            text: "Continue to Delivery",
             press: () {
               if (_formKey.currentState!.validate()) {
-                print("On click");
-                print(fname.text);
+                Order order = Order.getOrder();
+                order.fname = fname.text;
+                order.lname = lname.text;
+                order.address = address.text;
+                order.mobile = mobile.text;
+                order.city = city.text;
+                order.district = district.text;
+                Order.setOrder(order);
+
+                Navigator.pushNamed(context, DeliveryScreen.routeName);
               }
             },
           )

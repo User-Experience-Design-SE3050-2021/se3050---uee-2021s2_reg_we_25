@@ -14,9 +14,9 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
-  String? email;
-  String? password;
-  String? confirmPassword;
+  String email = '';
+  String password = '';
+  String confirmPassword = '';
   final List<String> errors = [];
 
   void addError({String error = ''}) {
@@ -55,7 +55,12 @@ class _SignUpFormState extends State<SignUpForm> {
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CompleteProfileScreen(email: email, password: password)
+                  )
+                );
               }
             }
           )
@@ -67,7 +72,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      onSaved: (newValue) => email = newValue ?? '',
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);
@@ -98,7 +103,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => password = newValue,
+      onSaved: (newValue) => password = newValue ?? '',
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
@@ -131,7 +136,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextFormField buildConfirmPasswordFormField() {
     return TextFormField(
       obscureText: true,
-      onSaved: (newValue) => confirmPassword = newValue,
+      onSaved: (newValue) => confirmPassword = newValue ?? '',
       onChanged: (value) {
         if (value == password || password?.length == 0) {
           removeError(error: kMatchPassError);

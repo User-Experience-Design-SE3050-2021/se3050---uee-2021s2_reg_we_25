@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:nolimit/components/custom_suffix_icon.dart';
 import 'package:nolimit/components/default_button.dart';
 import 'package:nolimit/components/form_error.dart';
@@ -8,17 +10,34 @@ import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class CompleteProfileForm extends StatefulWidget {
+  CompleteProfileForm({
+    Key? key,
+    required this.email,
+    required this.password
+  }) : super(key: key);
+  
+  final String email, password;
+
   @override
-  _CompleteProfileFormState createState() => _CompleteProfileFormState();
+  _CompleteProfileFormState createState() => _CompleteProfileFormState(email: email, password: password);
 }
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
+  _CompleteProfileFormState({
+    required this.email,
+    required this.password
+  });
+
+  final String email, password;
+
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   final _formKey = GlobalKey<FormState>();
   final List<String> errors = [];
-  String? firstName;
-  String? lastName;
-  String? phoneNumber;
-  String? address;
+  String firstName = '';
+  String lastName = '';
+  String phoneNumber = '';
+  String address = '';
 
   void addError({ String? error }) {
     if (!errors.contains(error))
@@ -53,10 +72,23 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           FormError(error: errors.contains(kAddressNullError) ? kAddressNullError : ''),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
-            text: 'Continue',
+            text: 'Sign Up',
             press: () {
               if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, SignUpSuccessScreen.routeName);
+                _formKey.currentState?.save();
+                
+                Map<String, dynamic> user = {
+                  'email': email,
+                  'password': password,
+                  'firstName': firstName,
+                  'lastName': lastName,
+                  'phoneNumber': phoneNumber,
+                  'address': address
+                };
+
+                _firestore.collection('users').add(user).then((value) => {
+                  Navigator.pushNamed(context, SignUpSuccessScreen.routeName)
+                });
               }
             },
           )
@@ -68,7 +100,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildAddressFormField() {
     return TextFormField(
           keyboardType: TextInputType.streetAddress,
-          onSaved: (newValue) => address = newValue,
+          onSaved: (newValue) => address = newValue ?? '',
           onChanged: (value) {
             if (value.isNotEmpty) {
               removeError(error: kAddressNullError);
@@ -94,7 +126,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildPhoneNumberFormField() {
     return TextFormField(
           keyboardType: TextInputType.phone,
-          onSaved: (newValue) => phoneNumber = newValue,
+          onSaved: (newValue) => phoneNumber = newValue ?? '',
           onChanged: (value) {
             if (value.isNotEmpty) {
               removeError(error: kPhoneNumberNullError);
@@ -120,7 +152,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildLastNameFormField() {
     return TextFormField(
           keyboardType: TextInputType.name,
-          onSaved: (newValue) => lastName = newValue,
+          onSaved: (newValue) => lastName = newValue ?? '',
           onChanged: (value) {
             if (value.isNotEmpty) {
               removeError(error: kNameNullError);
@@ -146,7 +178,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildFirstNameFormField() {
     return TextFormField(
           keyboardType: TextInputType.name,
-          onSaved: (newValue) => firstName = newValue,
+          onSaved: (newValue) => firstName = newValue ?? '',
           onChanged: (value) {
             if (value.isNotEmpty) {
               removeError(error: kNameNullError);

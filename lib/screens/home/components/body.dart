@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:nolimit/components/product_card.dart';
+import 'package:nolimit/models/Product.dart';
+import 'package:nolimit/provider/app_provider.dart';
+import 'package:nolimit/screens/singleProduct/singleProduct_screen.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -7,70 +12,80 @@ import '../../../size_config.dart';
 class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-            child: Image.asset("assets/images/hero.png"),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          HotIconsRow(),
-          SizedBox(
-            height: 5,
-          ),
-          // TopCollections(),
-          // SizedBox(
-          //   height: 5,
-          // ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Brands",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                          fontSize: 18),
-                    ),
-                    Text(
-                      "See More",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    GestureDetector(
-                      child: SizedBox(
-                        width: getProportionateScreenWidth(100),
-                        child: Container(
-                          padding: EdgeInsets.fromLTRB(
-                              getProportionateScreenWidth(5),
-                              getProportionateScreenWidth(2),
-                              getProportionateScreenWidth(2),
-                              0),
-                          child: Image.asset(
-                            "assets/images/deedat.png",
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
+    var appProvider = Provider.of<AppProvider>(context);
+    final double itemHeight = getProportionateScreenHeight(202);
+    final double itemWidth = getProportionateScreenWidth(100);
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(15)),
+              child: Image.asset("assets/images/hero.png"),
             ),
-          )
-        ],
+            SizedBox(
+              height: 15,
+            ),
+            HotIconsRow(),
+            SizedBox(
+              height: 5,
+            ),
+            // TopCollections(),
+            // SizedBox(
+            //   height: 5,
+            // ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text(
+                  //       "Brands",
+                  //       style: TextStyle(
+                  //           fontWeight: FontWeight.w600,
+                  //           color: Colors.black,
+                  //           fontSize: 18),
+                  //     ),
+                  //     Text(
+                  //       "See More",
+                  //       style:
+                  //           TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                  //     ),
+                  //   ],
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     GestureDetector(
+                  //       child: SizedBox(
+                  //         width: getProportionateScreenWidth(100),
+                  //         child: Container(
+                  //           padding: EdgeInsets.fromLTRB(
+                  //               getProportionateScreenWidth(5),
+                  //               getProportionateScreenWidth(2),
+                  //               getProportionateScreenWidth(2),
+                  //               0),
+                  //           child: Image.asset(
+                  //             "assets/images/deedat.png",
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
+                  ProductGroup(
+                    arr: appProvider.newArrivals,
+                    title: "New Arrivals",
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -177,23 +192,46 @@ class SingleCollection extends StatelessWidget {
 }
 
 class ProductGroup extends StatelessWidget {
-  const ProductGroup({
-    Key? key,
-  }) : super(key: key);
-
+  const ProductGroup({Key? key, required this.arr, required this.title})
+      : super(key: key);
+  final List<Product> arr;
+  final String title;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
-        Text(
-          "Trending Products",
-          style: TextStyle(
-              fontWeight: FontWeight.w600, color: Colors.black, fontSize: 18),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                  fontSize: 18),
+            ),
+            Text(
+              "See More",
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+            ),
+          ],
         ),
-        Text(
-          "See More",
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+        Wrap(
+          spacing: 40,
+          runSpacing: -15,
+          children: [
+            ...List.generate(
+                arr.length,
+                (index) => ProductCard(
+                      product: arr[index],
+                      press: () => {
+                        Navigator.pushNamed(
+                            context, SingleProductScreen.routeName,
+                            arguments:
+                                ProductDetailsArguments(product: arr[index])),
+                      },
+                    )),
+          ],
         ),
       ],
     );

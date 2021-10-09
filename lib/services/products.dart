@@ -18,4 +18,21 @@ class ProductsService {
         });
         return allProducts;
       });
+
+  Future<List<Product>> getNewArrivals() => _firestore
+      .collection(collection)
+      .where("categories", arrayContainsAny: ['new Arrivals'])
+      .get()
+      .then((QuerySnapshot snap) {
+        List<Product> newArrivals = [];
+        snap.docs.forEach((snapshot) {
+          if (snapshot.exists) {
+            print(snapshot.id);
+            newArrivals.add(Product.fromSnapshot(snapshot));
+          } else {
+            print("Snapshots doesn't exist");
+          }
+        });
+        return newArrivals;
+      });
 }

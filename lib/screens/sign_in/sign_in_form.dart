@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:localstore/localstore.dart';
 
 import 'package:nolimit/constants.dart';
 import 'package:nolimit/components/custom_suffix_icon.dart';
 import 'package:nolimit/components/default_button.dart';
 import 'package:nolimit/components/form_error.dart';
+import 'package:nolimit/models/User.dart';
 import 'package:nolimit/screens/home/home_screen.dart';
 import 'package:nolimit/screens/profile/profile_screen.dart';
 import 'package:nolimit/size_config.dart';
@@ -14,6 +17,8 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<SignInForm> {
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
@@ -55,7 +60,39 @@ class _SignInFormState extends State<SignInForm> {
             press: () {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                Navigator.pushNamed(context, ProfileScreen.routeName);
+
+                _firestore.collection('users')
+                  .where('email', isEqualTo: email)
+                  .where('password', isEqualTo: password)
+                  .limit(1)
+                  .get()
+                  .then((QuerySnapshot snapshot) async {
+                    if (snapshot.size > 0) {
+                      String userId = snapshot.docs[0].id;
+                      User user = User.fromSnapshot(snapshot.docs[0]);
+                      
+                      // Create a map of user details
+                      Map<String, dynamic> userMap = {
+                        'id': userId,
+                        'email': user.email,
+                        'firstName': user.firstName,
+                        'lastName': user.lastName,
+                        'phoneNumber': user.phoneNumber,
+                        'address': user.address,
+                        'avatar': user.avatar
+                      };
+
+                      // Get Localstore instance and save user data
+                      final db = await Localstore.instance;
+                      db.collection('login').doc('loginData').set(userMap);
+
+                      // Navigate to home page
+                      Navigator.pushNamed(context, HomeScreen.routeName);
+                    } else {
+                      addError(error: kEmailOrPasswordError);
+                    }
+                  })
+                  .catchError((error) => addError(error: kSomethingWrongError));
               }
             }
           ),

@@ -138,13 +138,13 @@ class _SignUpFormState extends State<SignUpForm> {
       obscureText: true,
       onSaved: (newValue) => confirmPassword = newValue ?? '',
       onChanged: (value) {
-        if (value == password || password?.length == 0) {
+        if (value == password || password.length == 0) {
           removeError(error: kMatchPassError);
         }
         return null;
       },
       validator: (value) {
-        if (value != password && password?.length != 0) {
+        if (value != password && password.length != 0) {
           addError(error: kMatchPassError);
           return "";
         }

@@ -100,12 +100,13 @@ class _ShippingFormState extends State<ShippingForm> {
         ]));
   }
 
-  Column buildTextFormField(
-      {label: String,
-      hint: String,
-      error: String,
-      controller: TextEditingController,
-      type: String}) {
+  Column buildTextFormField({
+    label: String,
+    hint: String,
+    error: String,
+    controller: TextEditingController,
+    type: String,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -127,6 +128,7 @@ class _ShippingFormState extends State<ShippingForm> {
               if (value.isNotEmpty) {
                 removeError(error: error);
               }
+
               return null;
             },
             validator: (value) {

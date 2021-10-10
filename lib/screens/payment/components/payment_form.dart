@@ -60,20 +60,10 @@ class _PaymentFormState extends State<PaymentForm> {
               type: "number"),
           buildTextFormField(
               label: "Expiry Date",
-              hint: "dd/mm/yyyy",
+              hint: "mm/yy",
               error: "Please enter the expiry date",
               controller: PaymentForm.expiry,
               type: "text"),
-
-          // SecondaryButton(
-          //   text: "Checkout",
-          //   press: () {
-          //     if (_formKey.currentState!.validate()) {
-          //       print("On click");
-          //       print(fname.text);
-          //     }
-          //   },
-          // )
         ]));
   }
 

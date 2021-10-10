@@ -5,6 +5,14 @@ import 'package:nolimit/size_config.dart';
 import 'complete_profile_form.dart';
 
 class Body extends StatelessWidget {
+  Body({
+    Key? key,
+    required this.email,
+    required this.password
+  }) : super(key: key);
+
+  final String email, password;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -24,7 +32,7 @@ class Body extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.06),
-              CompleteProfileForm(),
+              CompleteProfileForm(email: email, password: password),
               SizedBox(height: getProportionateScreenHeight(32)),
               Text(
                 'By continuing you confirm that you agree\nwith our Terms and Conditions',

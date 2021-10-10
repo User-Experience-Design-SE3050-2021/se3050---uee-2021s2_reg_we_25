@@ -9,6 +9,7 @@ import 'package:nolimit/screens/home/home_screen.dart';
 import 'package:nolimit/screens/orderSummary/orderSummary_screen.dart';
 import 'package:nolimit/screens/order_success/order_success_screen.dart';
 import 'package:nolimit/screens/payment/payment_screen.dart';
+import 'package:nolimit/screens/profile/profile_screen.dart';
 
 import '../constants.dart';
 
@@ -67,8 +68,9 @@ class BottomNavBar extends StatelessWidget {
                       ? kPrimaryColor
                       : inActiveIconColor,
                 ),
-                onPressed: () =>
-                    Navigator.pushNamed(context, CartScreen.routeName),
+                onPressed: () {
+                  Navigator.pushNamed(context, CartScreen.routeName);
+                },
               ),
               IconButton(
                   icon: SvgPicture.asset(
@@ -77,10 +79,8 @@ class BottomNavBar extends StatelessWidget {
                         ? kPrimaryColor
                         : inActiveIconColor,
                   ),
-                  onPressed: () => {
-                        Navigator.pushNamed(
-                            context, OrderSuccessScreen.routeName)
-                      }),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, ProfileScreen.routeName)),
             ],
           ),
         ));

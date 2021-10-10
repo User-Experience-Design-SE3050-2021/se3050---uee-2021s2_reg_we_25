@@ -9,6 +9,7 @@ class Product {
   static const COLORS = "colors";
   static const SIZES = "sizes";
   static const QTY = "qty";
+  static const CATEGORIES = "categories";
 
   late int _id;
   late String _title;
@@ -18,6 +19,7 @@ class Product {
   late List _colors;
   late List _sizes;
   late int _qty;
+  late List _categories;
 
 //   getters
   int get id => _id;
@@ -28,6 +30,7 @@ class Product {
   List get sizes => _sizes;
   List get colors => _colors;
   int get qty => _qty;
+  List get categories => _categories;
 
   Product.fromSnapshot(DocumentSnapshot snapshot) {
     Map data = snapshot.data() as Map;

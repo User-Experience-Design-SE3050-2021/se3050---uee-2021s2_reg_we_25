@@ -21,6 +21,7 @@ class SingleProductScreen extends StatelessWidget {
         product: arguments.product,
       ),
       appBar: CustomAppBar(),
+      bottomNavigationBar: BottomNavBar(selectedMenu: MenuState.products),
     );
   }
 }

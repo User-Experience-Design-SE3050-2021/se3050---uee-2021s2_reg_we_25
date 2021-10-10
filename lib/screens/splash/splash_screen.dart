@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:localstore/localstore.dart';
 import 'package:nolimit/screens/home/home_screen.dart';
 import 'package:nolimit/screens/sign_in/sign_in_screen.dart';
+import 'package:nolimit/screens/sign_up/sign_up_screen.dart';
 import 'dart:async';
 import '../../size_config.dart';
 import 'components/body.dart';
@@ -19,7 +20,7 @@ class SplashScreen extends StatelessWidget {
       final data = await db.collection('login').doc('loginData').get();
       var replacement;
       inspect(data);
-      
+
       if (data != null && data["id"] != null) {
         replacement = HomeScreen();
       } else {
@@ -27,9 +28,7 @@ class SplashScreen extends StatelessWidget {
       }
 
       Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => replacement)
-      );
+          context, MaterialPageRoute(builder: (context) => replacement));
     });
     return Scaffold(
       body: Body(),

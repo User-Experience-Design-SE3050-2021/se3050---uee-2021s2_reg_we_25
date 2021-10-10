@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nolimit/enums.dart';
 import 'package:nolimit/screens/allProducts/all_products_screen.dart';
+import 'package:nolimit/screens/cart/cart_screen.dart';
+import 'package:nolimit/screens/checkout/checkout_screen.dart';
+import 'package:nolimit/screens/delivery/delivery_screen.dart';
 import 'package:nolimit/screens/home/home_screen.dart';
+import 'package:nolimit/screens/orderSummary/orderSummary_screen.dart';
+import 'package:nolimit/screens/order_success/order_success_screen.dart';
+import 'package:nolimit/screens/payment/payment_screen.dart';
 import 'package:nolimit/screens/profile/profile_screen.dart';
 
 import '../constants.dart';
@@ -62,7 +68,9 @@ class BottomNavBar extends StatelessWidget {
                       ? kPrimaryColor
                       : inActiveIconColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, CartScreen.routeName);
+                },
               ),
               IconButton(
                   icon: SvgPicture.asset(
@@ -71,9 +79,8 @@ class BottomNavBar extends StatelessWidget {
                         ? kPrimaryColor
                         : inActiveIconColor,
                   ),
-                  onPressed: () => 
-                    Navigator.pushNamed(context, ProfileScreen.routeName)
-              ),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, ProfileScreen.routeName)),
             ],
           ),
         ));

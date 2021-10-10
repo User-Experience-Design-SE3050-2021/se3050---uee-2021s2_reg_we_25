@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nolimit/components/category_tab.dart';
 import 'package:nolimit/components/product_card.dart';
+import 'package:nolimit/provider/Category_provider.dart';
 import 'package:nolimit/provider/app_provider.dart';
 import 'package:nolimit/screens/singleProduct/singleProduct_screen.dart';
 import 'package:nolimit/size_config.dart';
@@ -10,6 +11,7 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appProvider = Provider.of<AppProvider>(context);
+    var categoryProvider = Provider.of<CategoryProvider>(context);
     final double itemHeight = getProportionateScreenHeight(202);
     final double itemWidth = getProportionateScreenWidth(100);
     return Padding(
@@ -20,24 +22,20 @@ class Body extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      CategoryTab(
-                        name: 'All',
-                      ),
-                      CategoryTab(
-                        name: 'Men',
-                      ),
-                      CategoryTab(
-                        name: 'Women',
-                      ),
-                      CategoryTab(
-                        name: 'Kids',
-                      ),
-                      CategoryTab(
-                        name: 'Shirts',
-                      ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      children: [
+                        CategoryTab(
+                          name: 'All',
+                        ),
+                        ...List.generate(
+                            categoryProvider.allCategory.length,
+                            (index) => CategoryTab(
+                                name:
+                                    categoryProvider.allCategory[index].title))
+                      ],
+                    ),
                   )),
             ),
             Flexible(

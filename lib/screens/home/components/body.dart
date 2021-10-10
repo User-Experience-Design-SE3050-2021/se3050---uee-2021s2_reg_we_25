@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nolimit/components/product_card.dart';
 import 'package:nolimit/models/Brand.dart';
@@ -11,6 +12,7 @@ import 'package:nolimit/screens/allBrands/allBrands_screen.dart';
 import 'package:nolimit/screens/allCategory/all_category_screen.dart';
 import 'package:nolimit/screens/allOffers/all_offers_screen.dart';
 import 'package:nolimit/screens/allProducts/all_products_screen.dart';
+import 'package:nolimit/screens/categoryProducts/categoryProducts_screen.dart';
 import 'package:nolimit/screens/singleProduct/singleProduct_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -30,12 +32,23 @@ class Body extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Column(
           children: [
-            Container(
-              width: double.infinity,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(15)),
-              child: Image.asset("assets/images/hero.png"),
-            ),
+            ImageSlideshow(
+                height: 170,
+                indicatorColor: Colors.transparent,
+                indicatorBackgroundColor: Colors.transparent,
+                autoPlayInterval: 5000,
+                isLoop: true,
+                children: [
+                  Image.asset(
+                    "assets/images/hero.png",
+                  ),
+                  Image.asset(
+                    "assets/images/hero3.png",
+                  ),
+                  Image.asset(
+                    "assets/images/hero2.png",
+                  ),
+                ]),
             SizedBox(
               height: 15,
             ),
@@ -211,6 +224,10 @@ class SingleCollection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, CategoryProductsScreen.routeName,
+            arguments: name);
+      },
       child: SizedBox(
         width: getProportionateScreenWidth(95),
         child: Column(

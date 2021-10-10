@@ -43,4 +43,18 @@ class AppProvider with ChangeNotifier {
     _bestSellers = await _productsService.getBestSellers();
     notifyListeners();
   }
+
+  List<Product> filterProducts(String category) {
+    List<Product> products = [];
+    if (category == "All") {
+      return allProducts;
+    }
+    allProducts.forEach((product) {
+      print(product);
+      if (product.categories.contains(category)) {
+        products.add(product);
+      }
+    });
+    return products;
+  }
 }

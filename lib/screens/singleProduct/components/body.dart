@@ -95,20 +95,38 @@ class Body extends StatelessWidget {
                   child: SecondaryButton(
                     text: "Add To Cart",
                     press: () {
-                      Cart.addToCart(
-                          product: product,
-                          qty: qty,
-                          size: selectedSize,
-                          color: selectedColor,
-                          colorCode: selectedColorCode);
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          backgroundColor: Colors.white,
-                          content: Text(
-                            "Product added to Cart Successfully",
-                            textAlign: TextAlign.center,
-                            style:
-                                TextStyle(color: kPrimaryColor, fontSize: 16),
-                          )));
+                      if (selectedSize.length == 0) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.white,
+                            content: Text(
+                              "Product select a size",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.red, fontSize: 16),
+                            )));
+                      } else if (selectedColor.length == 0) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.white,
+                            content: Text(
+                              "Product select a color",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: Colors.red, fontSize: 16),
+                            )));
+                      } else {
+                        Cart.addToCart(
+                            product: product,
+                            qty: qty,
+                            size: selectedSize,
+                            color: selectedColor,
+                            colorCode: selectedColorCode);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.white,
+                            content: Text(
+                              "Product added to Cart Successfully",
+                              textAlign: TextAlign.center,
+                              style:
+                                  TextStyle(color: kPrimaryColor, fontSize: 16),
+                            )));
+                      }
                     },
                   ),
                 )

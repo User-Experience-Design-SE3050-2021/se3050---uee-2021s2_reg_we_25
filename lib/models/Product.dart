@@ -42,5 +42,6 @@ class Product {
     _sizes = data[SIZES];
     _colors = data[COLORS];
     _qty = data[QTY];
+    _categories = data[CATEGORIES];
   }
 }

@@ -32,7 +32,7 @@ class ProductCard extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.fromLTRB(
                       getProportionateScreenWidth(5),
-                      getProportionateScreenWidth(2),
+                      getProportionateScreenWidth(10),
                       getProportionateScreenWidth(2),
                       0),
                   decoration: BoxDecoration(

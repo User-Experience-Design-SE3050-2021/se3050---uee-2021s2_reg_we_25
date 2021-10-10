@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nolimit/enums.dart';
 import 'package:nolimit/screens/allProducts/all_products_screen.dart';
 import 'package:nolimit/screens/cart/cart_screen.dart';
+import 'package:nolimit/screens/categoryProducts/categoryProducts_screen.dart';
 import 'package:nolimit/screens/checkout/checkout_screen.dart';
 import 'package:nolimit/screens/delivery/delivery_screen.dart';
 import 'package:nolimit/screens/home/home_screen.dart';

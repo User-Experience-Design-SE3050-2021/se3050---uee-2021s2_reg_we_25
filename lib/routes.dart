@@ -4,6 +4,7 @@ import 'package:nolimit/screens/allCategory/all_category_screen.dart';
 import 'package:nolimit/screens/allOffers/all_offers_screen.dart';
 import 'package:nolimit/screens/allProducts/all_products_screen.dart';
 import 'package:nolimit/screens/cart/cart_screen.dart';
+import 'package:nolimit/screens/categoryProducts/categoryProducts_screen.dart';
 import 'package:nolimit/screens/checkout/checkout_screen.dart';
 import 'package:nolimit/screens/delivery/delivery_screen.dart';
 import 'package:nolimit/screens/home/home_screen.dart';
@@ -39,4 +40,5 @@ final Map<String, WidgetBuilder> routes = {
   AllBrandsScreen.routeName: (context) => AllBrandsScreen(),
   AllOffersScreen.routeName: (context) => AllOffersScreen(),
   SingleOfferScreen.routeName: (context) => SingleOfferScreen(),
+  CategoryProductsScreen.routeName: (context) => CategoryProductsScreen(),
 };

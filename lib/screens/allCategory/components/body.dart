@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nolimit/provider/Category_provider.dart';
+import 'package:nolimit/screens/categoryProducts/categoryProducts_screen.dart';
 import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {
@@ -50,31 +51,37 @@ class SingleCategory extends StatelessWidget {
   final String color;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 15),
-      padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-      width: double.infinity,
-      height: 140,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Color(int.parse(color))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text(
-              catName.toUpperCase(),
-              style: TextStyle(
-                  fontSize: 22,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, CategoryProductsScreen.routeName,
+            arguments: catName);
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 15),
+        padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+        width: double.infinity,
+        height: 140,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Color(int.parse(color))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text(
+                catName.toUpperCase(),
+                style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600),
+              ),
             ),
-          ),
-          Container(
-            child: Image.network(image),
-          )
-        ],
+            Container(
+              child: Image.network(image),
+            )
+          ],
+        ),
       ),
     );
   }

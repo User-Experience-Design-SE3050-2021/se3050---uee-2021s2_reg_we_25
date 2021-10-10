@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nolimit/models/Offer.dart';
-import 'package:nolimit/services/Offers.dart';
+import 'package:nolimit/services/offers.dart';
 
 class OffersProvider with ChangeNotifier {
   List<Offer> _allOffers = [];
